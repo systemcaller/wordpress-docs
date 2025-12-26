@@ -1,0 +1,46 @@
+name: Deploy to Tencent Cloud
+
+on:
+  push:
+    branches:
+      - main # 或者是 master，看你的主分支叫什么
+    paths-ignore:
+      - "README.md" # 改说明文档不触发部署
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. 安装 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      # 3. 安装依赖
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. 构建项目 (Docusaurus build)
+      - name: Build
+        run: npm run build
+
+      # 5. 把构建好的文件推送到服务器
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i"
+          SOURCE: "build/" # Docusaurus 打包出来的文件夹
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          # 👇 ⚠️⚠️⚠️ 重点：修改成你服务器上 WordPress 根目录下的 docs 文件夹路径
+          # 通常是 /www/wwwroot/你的域名/docs
+          TARGET: "/usr/local/lighthouse/softwares/wordpress/docs"
+          # ⚠️ 如果你的服务器目录不叫这个，请务必修改上面这行！
