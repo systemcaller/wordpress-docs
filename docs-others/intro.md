@@ -7,42 +7,17 @@ sidebar_label: 介绍
 
 Let's discover **Docusaurus in less than 5 minutes**.
 
-## Getting Started
 
-Get started by **creating a new site**.
+# 1. 把当前所有修改加入暂存区
+git add .
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+# 2. 修正上一次提交 (并保留上一次的提交文字，不弹窗编辑)
+git commit --amend --no-edit
 
-### What you'll need
+如果你想顺便改一下提交的文字，把第二句改成：git commit --amend -m "新的提交说明"
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+如果你的 上一次提交 已经推送到 GitHub 了（即你之前已经 git push 过了）：
+合并后，你的本地版本会和 GitHub 上的版本不一致（产生分叉）。
+此时如果你想推送到 GitHub，必须使用强制推送：
+git push -f
+如果你还没推送到 GitHub，则不需要 -f，直接合并完正常 push 即可。
