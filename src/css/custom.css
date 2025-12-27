@@ -28,3 +28,21 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* 侧边栏分隔符样式 */
+.sidebar-divider {
+  display: block;
+  margin-top: 20px;       /* 与上面菜单的距离 */
+  margin-bottom: 8px;     /* 与下面菜单的距离 */
+  padding-left: 8px;      /* 左侧缩进 */
+  
+  /* 字体设置 - 模仿 Supabase */
+  font-size: 0.75rem;     /* 小字体 */
+  font-weight: 700;       /* 加粗 */
+  color: var(--ifm-color-emphasis-600); /* 灰色文字 */
+  text-transform: uppercase; /* 强制大写 */
+  letter-spacing: 0.05em;    /* 字母稍微分开点 */
+
+  /* 如果你想要一条真实的“下划线”，把下面这行注释取消掉 */
+  /* border-bottom: 1px solid var(--ifm-color-emphasis-300); */
+}

@@ -18,5 +18,13 @@
   "item.label.GitHub": {
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
+  },
+  "item.label.Java 教程": {
+    "message": "Java 教程",
+    "description": "Navbar item with label Java 教程"
+  },
+  "item.label.Python 教程": {
+    "message": "Python 教程",
+    "description": "Navbar item with label Python 教程"
   }
 }
