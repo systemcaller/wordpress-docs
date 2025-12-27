@@ -46,3 +46,75 @@
   /* 如果你想要一条真实的“下划线”，把下面这行注释取消掉 */
   /* border-bottom: 1px solid var(--ifm-color-emphasis-300); */
 }
+
+
+/* ================================================= */
+/*  智能版本选择器显隐逻辑                             */
+/* ================================================= */
+
+
+/* 1. 默认情况下，隐藏所有特定的版本选择器 */
+.navbar-version-java,
+.navbar-version-python {
+  display: none !important;
+}
+
+/* 2. 当处于 Java 环境时，显示并对齐 */
+html.plugin-id-java .navbar-version-java {
+  display: flex !important;
+  align-items: center; /* 关键：让文字和箭头垂直居中 */
+}
+
+/* 3. 当处于 Python 环境时，显示并对齐 */
+html.plugin-id-python .navbar-version-python {
+  display: flex !important;
+  align-items: center; /* 关键：让文字和箭头垂直居中 */
+}
+
+/* 4. (新增) 专门修复箭头的小尾巴位置 */
+/* Docusaurus 默认给箭头加了偏移，Flex 布局下需要复位 */
+/* .navbar-version-java::after,
+.navbar-version-python::after {
+  transform: none !important;
+  margin-top: 2px;
+} */
+
+
+/* 4. (修正) 移除之前的箭头重绘代码，改用更温和的对齐方式 */
+/* 只需要给文字和箭头之间加一点间距即可，不需要重画箭头 */
+.navbar-version-java::after,
+.navbar-version-python::after {
+  /* 保持默认样式，只微调位置 */
+   margin-left: 6px; 
+  margin-top: 7px; 
+  display: flex;
+  
+}
+
+
+
+/* ======================================================= */
+/*  强制显示“回到顶部”按钮 (Force Show Back to Top)          */
+/* ======================================================= */
+
+/* Docusaurus 默认只在移动端显示这个按钮，我们用 CSS 强制在桌面端也显示 */
+button[aria-label="Scroll back to top"] {
+  display: block !important;
+  
+  /* 如果你想微调它的位置或颜色，可以在这里写 */
+  /* bottom: 2rem; */
+  /* right: 2rem; */
+}
+
+/* 优化：当在桌面端显示时，防止它遮挡住底部的 Footer */
+@media (min-width: 997px) {
+  button[aria-label="Scroll back to top"] {
+    display: block !important;
+    opacity: 0.6; /* 平时稍微透明一点，不那么抢眼 */
+  }
+  
+  button[aria-label="Scroll back to top"]:hover {
+    opacity: 1; /* 鼠标放上去变亮 */
+    transform: scale(1.1); /* 稍微放大 */
+  }
+}

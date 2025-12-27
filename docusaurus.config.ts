@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Docs', // 标题
   tagline: 'Dinosaurs are cool', // 副标题
-  favicon: 'img/favicon.ico', // logo
+  favicon: 'img/favicon.ico', // 站点图标
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -84,6 +84,21 @@ const config: Config = {
         routeBasePath: 'java',
         sidebarPath: './sidebars-java.ts',
         // editUrl: 'https://github.com/your-repo/edit/main/',
+        versions: {
+          current: {
+            label: 'V 3.0-SNAPSHOT', // 正在开发的版本
+            path: 'next',
+            banner: 'none',
+          },
+          '2.0': {
+            label: 'V 2.0 (Current)', // 稳定版
+            banner: 'none',
+          },
+          '1.0': {
+            label: 'V 1.0 (GA)', // 老版本
+            banner: 'unmaintained',
+          },
+        }
       },
     ],
 
@@ -116,6 +131,13 @@ const config: Config = {
         highlightSearchTermsOnTargetPage: true,
         // 搜索框位置：设为 right 让它出现在右上角
         searchBarPosition: "right",
+        // 👇👇👇 核心修改：添加这行配置 👇👇👇
+        // 告诉插件，这些路径下的页面都是文档，都要建索引
+        // 对应你 plugins 和 presets 里配置的 routeBasePath
+        docsRouteBasePath: ['/', 'java', 'python'],
+
+        // 博客路径（默认就是 /blog，写上更保险）
+        blogRouteBasePath: '/blog',
       }),
     ],
   ],
@@ -127,12 +149,18 @@ const config: Config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    docs: {
+      sidebar: {
+        hideable: true, // 开启侧边栏可隐藏功能
+        autoCollapseCategories: true, // (可选) 自动折叠其他分类，保持侧边栏整洁
+      },
+    },
     // 导航栏配置
     navbar: {
-      title: 'My Docs',
+      title: 'Systemcaller Docs',
       logo: {
-        alt: 'My Site Logo',
-        src: '/img/logo.svg',
+        alt: 'Systemcaller Logo',
+        src: '/img/logo.jpg', // logo图片
       },
       items: [
         {
@@ -145,13 +173,14 @@ const config: Config = {
         },
         // ========== dropdown菜单下配置子菜单 ==========
         {
-          type: 'dropdown',              // 关键：类型为 dropdown
+          type: 'dropdown',              // 关键：类型为 dropdown,下拉框
           label: '教程',                 // 主菜单显示文字
           position: 'left',
           items: [
             {
               label: 'Java 教程',
-              to: '/java/intro',
+              // to: '/java/intro',
+              to: '/java/versions',//连接到一/src/page/java/versions.tsx页面
             },
             {
               label: 'Python 教程',
@@ -159,12 +188,19 @@ const config: Config = {
             },
           ]
         },
+        // Java 的版本控制器 (加了 className 控制显示与否)
         {
-          type: 'docSidebar',
-          sidebarId: 'javaSidebar', // 必须对应 sidebars-Java.ts 里的名字: const sidebars: javaSidebar{}
-          position: 'left',     // 位置,左边
-          label: 'Java 教程',  // 标题
-          docsPluginId: 'java', // ⚠️ 必须写上plugins配置中定义的 ID
+          type: 'docsVersionDropdown',
+          position: 'right',
+          docsPluginId: 'java',
+          className: 'navbar-version-java', // 关键：加上这个类名
+        },
+        // Python 的版本控制器 (加了 className)
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+          docsPluginId: 'python',
+          className: 'navbar-version-python', // 关键：加上这个类名
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         // ========== 搜索框,不写会默认跑到最右边不好看 ==========
@@ -197,11 +233,11 @@ const config: Config = {
           ],
         },
         {
-          title: 'Community',
+          title: '友情链接',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'nobody',
+              href: '#',
             }
           ],
         },
@@ -210,16 +246,12 @@ const config: Config = {
           items: [
             {
               label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/systemcaller',
+              to: 'https://systemcaller.online',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Systemcaller, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
